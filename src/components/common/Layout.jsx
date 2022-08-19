@@ -1,19 +1,16 @@
 import styled from "styled-components";
 
-import { useDispatch } from "react-redux";
-
 function Layout(props) {
   return <StLayout>{props.children}</StLayout>;
 }
 
 const StLayout = styled.div`
+  background-color: aliceblue;
   max-width: 390px;
   height: 100vh;
   margin: 0 auto;
   /* max-width: 1000px;
-  min-height: 100vh;
-  padding: 0 20px;
-  margin: 0 auto; */
+  padding: 0 20px; */
 `;
 
 export default Layout;

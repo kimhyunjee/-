@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // import Header from "../components/common/Header";
-import Layout from "../components/common/Layout";
 
+import Layout from "../components/common/Layout";
 import MainPage from "../pages/MainPage";
 import LogInPage from "../pages/LogInPage";
 import NotFound from "../pages/NotFound";
@@ -13,9 +13,9 @@ import PostPage from "../pages/PostPage";
 function Router() {
   return (
     <BrowserRouter>
-      {/* <Layout>
-        <Header /> */}
       <Layout>
+        {/* <Header /> */}
+
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<LogInPage />} />
@@ -24,7 +24,6 @@ function Router() {
           <Route path="/post/:postId" element={<DetailPage />} />
           <Route path="/mypage" element={<MyPage />} />
         </Routes>
-        {/* </Layout> */}
       </Layout>
     </BrowserRouter>
   );
