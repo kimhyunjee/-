@@ -5,6 +5,7 @@ import { FiArrowLeft, FiEdit, FiTrash2 } from "react-icons/fi";
 import { MdAccountCircle } from "react-icons/md";
 import { BsHeart } from "react-icons/bs";
 
+
 const DetailPost = () => {
   const navigate = useNavigate();
   return (
@@ -68,8 +69,6 @@ const Header = styled.div`
   height: 50px;
   background-color: #acd137;
   color: white;
-  
-    //margin-left: 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
