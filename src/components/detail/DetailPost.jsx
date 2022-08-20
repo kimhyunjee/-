@@ -1,32 +1,31 @@
 import React from "react";
 import styled from "styled-components";
-import Layout from "../components/Layout";
+
 import { useNavigate, useParams } from "react-router-dom";
-import { FiArrowLeft, FiEdit, FiTrash2} from "react-icons/fi";
+import { FiArrowLeft, FiEdit, FiTrash2 } from "react-icons/fi";
 
 const Detail = () => {
- const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
-        <>
-        <Layout>
-        <Header>
-            <FiArrowLeft 
-                size={30}
-                onClick={()=>{
-                    navigate("/")
-                }}/>
-            <FiEdit 
-                size={30}
-                onClick={()=>{
-                    navigate("/edit/:editId")
-                }}/>
-            <FiTrash2 
-                size={30}
-                />
-            
-          {/* 이미지 */}
-        </Header>
-        {/* <Body>
+    <>
+      <Header>
+        <FiArrowLeft
+          size={30}
+          onClick={() => {
+            navigate("/");
+          }}
+        />
+        <FiEdit
+          size={30}
+          onClick={() => {
+            navigate("/edit/:editId");
+          }}
+        />
+        <FiTrash2 size={30} />
+
+        {/* 이미지 */}
+      </Header>
+      {/* <Body>
             <icon>프로필사진</icon>
             <h3>큐컴버</h3>
             <div>위치</div>
@@ -39,13 +38,12 @@ const Detail = () => {
             <div>가격</div>
             <button>채팅하기</button>
         </Bottom> */}
-        </Layout>
-        </>
-)
+    </>
+  );
 };
 export default Detail;
 const Header = styled.div`
   height: 100px;
-  background-color: #ACD137;
+  background-color: #acd137;
   color: white;
- ` 
+`;
