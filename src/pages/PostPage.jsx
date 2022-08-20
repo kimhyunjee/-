@@ -1,9 +1,12 @@
+import React from "react";
+import Posting from "../components/post/Posting";
 function postPage() {
   return (
     <>
-      <div></div>
+      <Posting />
     </>
   );
 }
-
 export default postPage;
+
+

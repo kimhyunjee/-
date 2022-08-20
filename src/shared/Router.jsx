@@ -10,6 +10,8 @@ import DetailPage from "../pages/DetailPage";
 import MyPage from "../pages/MyPage";
 import PostPage from "../pages/PostPage";
 import StartPage from "../pages/StartPage";
+import Posting from "../components/post/Posting";
+import EditPage from "../pages/EditPage";
 
 function Router() {
   return (
@@ -25,6 +27,7 @@ function Router() {
           <Route path="/post" element={<PostPage />} />
           <Route path="/post/:postId" element={<DetailPage />} />
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/edit/:postId" element={<EditPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>
