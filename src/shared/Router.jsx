@@ -9,6 +9,7 @@ import NotFound from "../pages/NotFound";
 import DetailPage from "../pages/DetailPage";
 import MyPage from "../pages/MyPage";
 import PostPage from "../pages/PostPage";
+import StartPage from "../pages/StartPage";
 
 function Router() {
   return (
@@ -17,7 +18,8 @@ function Router() {
         {/* <Header /> */}
 
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<StartPage />} />
+          <Route path="/main" element={<MainPage />} />
           <Route path="/login" element={<LogInPage />} />
           <Route path="/*" element={<NotFound />} />
           <Route path="/post" element={<PostPage />} />
