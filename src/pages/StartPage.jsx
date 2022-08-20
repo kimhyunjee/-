@@ -5,8 +5,12 @@ import logo from "../image/image_cucumber.png";
 function StartPage() {
   const navigate = useNavigate();
 
-  const onClickStartButton = () => {
+  const onClickSNSButton = () => {
     navigate("/login");
+  };
+
+  const onClickSignUpButton = () => {
+    navigate("/signup");
   };
 
   return (
@@ -26,7 +30,10 @@ function StartPage() {
           </p>
         </StTitleBox>
         <Buttonbox>
-          <button onClick={onClickStartButton}>시작하기</button>
+          <button onClick={onClickSNSButton}>
+            SNS 계정으로 3초만에 시작하기
+          </button>
+          <button onClick={onClickSignUpButton}> 회원가입하기 </button>
         </Buttonbox>
       </Container>
     </>
@@ -88,5 +95,6 @@ const Buttonbox = styled.div`
     padding: 10px;
     background-color: #72a740;
     box-sizing: border-box;
+    margin: 10px;
   }
 `;
