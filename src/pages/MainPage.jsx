@@ -21,6 +21,16 @@ function MainPage() {
         </StHeadercontainer>
         <hr></hr>
         <StBodycontainer>
+          <hr />
+          <Content>
+            <Img>img</Img>
+            <Title>자급제 화이트 미개봉</Title>
+            <Location>군자동</Location>
+            <Price>75,000원</Price>
+            <Like>Like : 7</Like>
+            <hr />
+          </Content>
+          
           {/* <StListUl>
             {.map돌리는 부분}
           </StListUl> */}
@@ -47,6 +57,24 @@ function MainPage() {
 
 export default MainPage;
 
+const Content = styled.div`
+  
+`
+const Img = styled.div`
+  
+`
+const Title = styled.div`
+  
+`
+const Location = styled.div`
+  
+`
+const Price = styled.div`
+  
+`
+const Like = styled.div`
+  
+`
 const StMaincontainer = styled.div``;
 
 const StHeadercontainer = styled.div`

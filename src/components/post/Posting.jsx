@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { FiX } from "react-icons/fi";
 import { BsFillCameraFill } from "react-icons/bs";
+import FileUpload from "../common/img";
 
 const Posting = () => {
   const navigate = useNavigate();
@@ -10,11 +11,11 @@ const Posting = () => {
       <Header>
         <FiX 
             size={30}
-            onClick={"/main"}
+            onClick={()=>{"/main"}}
         />
         <div>중고거래 글쓰기</div>
         <Complete
-            onClick={"/main"}
+            onClick={()=>{"/main"}}
         >완료</Complete>
         <hr />
       </Header>
@@ -23,6 +24,7 @@ const Posting = () => {
             <BsFillCameraFill 
                 size={30}
             />
+           <FileUpload />
         </Box>
       </Picture>
       <hr />
@@ -58,7 +60,7 @@ const Body1 = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-
+    background-color: white;
 `
 const Body2 = styled.div`
     height: 60px;
@@ -66,6 +68,7 @@ const Body2 = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: white;
 `
 const Body3 = styled.div`
     height: 60px;
@@ -73,6 +76,7 @@ const Body3 = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: white;
 `
 const Body4 = styled.div`
     height: 60px;
@@ -80,6 +84,7 @@ const Body4 = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: white;
 `
 const Content = styled.div`
     height: 200px;
@@ -87,6 +92,7 @@ const Content = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: white;
 `
 const Header = styled.div`
   height: 50px;
@@ -109,6 +115,7 @@ const Picture = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: white;
 `
 const Box = styled.div`
     height: 100px;

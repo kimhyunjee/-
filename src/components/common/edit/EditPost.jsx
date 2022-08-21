@@ -18,7 +18,6 @@ const EditPost = () => {
         >완료</Complete>
         <hr />
       </Header>
-
       <Picture>
         <Box>
             <BsFillCameraFill 
@@ -27,7 +26,6 @@ const EditPost = () => {
         </Box>
       </Picture>
       <hr />
-
       <Body1>
         글 제목
       </Body1>
