@@ -85,6 +85,7 @@ const Buttonbox = styled.div`
   width: 100%;
   transform: translateY(120px);
   text-align: center;
+  
 
   & button {
     /* width: 100%;
