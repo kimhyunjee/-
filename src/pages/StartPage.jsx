@@ -85,7 +85,6 @@ const Buttonbox = styled.div`
   width: 100%;
   transform: translateY(120px);
   text-align: center;
-  
 
   & button {
     /* width: 100%;
@@ -97,5 +96,6 @@ const Buttonbox = styled.div`
     background-color: #72a740;
     box-sizing: border-box;
     margin: 10px;
+    cursor: pointer;
   }
 `;

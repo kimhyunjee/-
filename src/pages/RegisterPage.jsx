@@ -5,6 +5,7 @@ import { BiArrowBack } from "react-icons/bi";
 function RegisterPage() {
   const navigate = useNavigate();
 
+  //뒤로가기버튼
   const onClickBackButton = () => {
     navigate("/");
   };
@@ -16,9 +17,12 @@ function RegisterPage() {
           <BiArrowBack onClick={onClickBackButton} />
         </STArrowBox>
         <StTitleBox>
-          안녕하세요!
-          <br />
-          이메일 주소로 가입해주세요
+          <em>
+            안녕하세요!
+            <br />
+            이메일 주소로 가입해주세요
+          </em>
+          <p>이메일 주소는 안전하게 보관되며 이웃들에게 공개되지 않아요</p>
         </StTitleBox>
         <Form
         // action="나중에 서버url"
@@ -32,7 +36,9 @@ function RegisterPage() {
               accept="image/jpg,image/png,image/jpeg,image/gif"
               placeholder="프로필 이미지를 선택해주세요"
             />
-            <label htmlFor="img">파일선택</label>
+            <label id="imglabel" htmlFor="img">
+              파일선택
+            </label>
           </div>
           <div>
             <input
@@ -72,17 +78,20 @@ function RegisterPage() {
             />
           </div>
           <ButtonBox>
-            <input className="signupbutton" type="submit"></input>
+            <input id="signup" className="signupsubmit" type="submit"></input>
+            <label id="signuplabel" htmlFor="signup">
+              회원가입
+            </label>
           </ButtonBox>
         </Form>
-        {/* <ButtonBox>
-          <div className="button">
+        <ButtonBox>
+          {/* <div className="button">
             <button>회원가입</button>
-          </div>
+          </div> */}
           <div className="button">
             <button>로그인</button>
           </div>
-        </ButtonBox> */}
+        </ButtonBox>
       </div>
     </>
   );
@@ -100,6 +109,16 @@ const STArrowBox = styled.div`
 const StTitleBox = styled.div`
   padding: 5px;
   margin: 5px 0px;
+
+  em {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.4;
+  }
+  p {
+    font-size: 12px;
+    margin-top: 20px;
+  }
 `;
 
 const Form = styled.form`
@@ -129,7 +148,7 @@ const Form = styled.form`
   }
 
   //파일선택버튼
-  & label {
+  & #imglabel {
     background-color: #acd137;
     color: #fff;
     font-size: 14px;
@@ -138,9 +157,9 @@ const Form = styled.form`
 
     cursor: pointer;
 
-    height: 36px;
+    height: 30px;
     width: 90px;
-    padding: 9px 10px;
+    padding: 6px 10px;
     margin-right: 10px;
 
     align-self: flex-end;
@@ -185,14 +204,37 @@ const ButtonBox = styled.div`
   transform: translateY(20px);
   text-align: center;
 
-  & .signupbutton {
+  //실제회원가입버튼 안보이게 처리
+  & .signupsubmit {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    display: none;
+  }
+  //회원가입버튼과 원격연결된 보여지는 라벨
+  & #signuplabel {
+    background-color: #acd137;
+    border: none;
+    border-radius: 20px;
+    box-sizing: border-box;
+    /* width: 80%; */
+    width: 500px;
+    cursor: pointer;
+    padding: 10px;
+    margin: 10px;
+  }
+  & button {
+    background-color: #acd137;
     border: none;
     border-radius: 20px;
     box-sizing: border-box;
     width: 80%;
+    cursor: pointer;
     padding: 10px;
     margin: 10px;
-    background-color: #acd137;
   }
 `;
 
@@ -200,7 +242,7 @@ const ButtonBox = styled.div`
 const PostImgBox = styled.div`
   height: 200px;
   width: 200px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   border-radius: 50%;
   /* background-image: url(${(props) => props.postImg}); */
   /* background-image: url("../image/image_cucumber.png"); */
