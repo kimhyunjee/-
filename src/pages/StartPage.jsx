@@ -96,5 +96,6 @@ const Buttonbox = styled.div`
     background-color: #72a740;
     box-sizing: border-box;
     margin: 10px;
+    cursor: pointer;
   }
 `;

@@ -55,5 +55,6 @@ const StIconBox = styled.div`
   justify-content: center;
   & .logo {
     margin: 15px;
+    cursor: pointer;
   }
 `;
