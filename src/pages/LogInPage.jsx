@@ -166,7 +166,7 @@ const ErrorMessage = styled.div`
   font-size: 10px;
   position: absolute;
   top: 55px;
-  left: 20px;
+  left: 10px;
 `;
 
 const ButtonBox = styled.div`
