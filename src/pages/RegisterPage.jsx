@@ -1,13 +1,186 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { BiArrowBack } from "react-icons/bi";
+
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { Formik } from "formik";
 
 function RegisterPage() {
   const navigate = useNavigate();
 
+  const [userId, setUserId] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [nickname, setnickname] = useState("");
+
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+    nickname: "",
+  });
+
+  const [userIdError, setUserIdError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+  const [nicknameError, setnicknameError] = useState(false);
+  const [checkEmail, setCheckEmail] = useState({ email: "" });
+  const [checknickname, setChecknickname] = useState({ nickname: "" });
+  const [dupEmail, setDupEmail] = useState(false);
+  const [dupnickname, setDupnickname] = useState(false);
+
+  //파일 미선택시 미리보기이미지
+  const [previewImg, setPreviewImg] = useState(
+    "https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png"
+  );
+
   //뒤로가기버튼
   const onClickBackButton = () => {
     navigate("/");
+  };
+
+  //프로필 사진 받아오기
+  const OnChangeFile = async (e) => {
+    e.preventDefault();
+    let reader = new FileReader();
+
+    let file = e.target.files[0];
+    reader.onloadend = () => {
+      setPreviewImg(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+  //유저아이디(이메일아이디) 받는곳 체크
+  const onChangeUseId = (e) => {
+    const userIdRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,13}$/;
+
+    if (!e.target.value || userIdRegex.test(e.target.value))
+      setUserIdError(false);
+    else setUserIdError(true);
+    setUserId(e.target.value);
+    setData({ ...data, email: e.target.value });
+    setCheckEmail({ email: e.target.value });
+  };
+
+  //비밀번호 유효성
+  const onChangePassword = (e) => {
+    const passwordRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,13}$/;
+    if (!e.target.value || passwordRegex.test(e.target.value))
+      setPasswordError(false);
+    else setPasswordError(true);
+
+    if (!confirmPassword || e.target.value === confirmPassword)
+      setConfirmPasswordError(false);
+    else setConfirmPasswordError(true);
+    setPassword(e.target.value);
+    setData({ ...data, password: e.target.value });
+  };
+  //비밀번호 확인 체크
+  const onChangeConfirmPassword = (e) => {
+    if (password === e.target.value) setConfirmPasswordError(false);
+    else setConfirmPasswordError(true);
+    setConfirmPassword(e.target.value);
+    // setData({ ...data, confirmPassword: e.target.value });
+  };
+
+  //닉네임 유효성체크
+  const onChangenickname = (e) => {
+    const nicknameRegex = /^[a-zA-Zㄱ-힣0-9-_.]{2,12}$/;
+    if (!e.target.value || nicknameRegex.test(e.target.value))
+      setnicknameError(false);
+    else setnicknameError(true);
+    setnickname(e.target.value);
+    setData({ ...data, nickname: e.target.value });
+    setChecknickname({ nickname: e.target.value });
+  };
+  //이메일 유효성 체크
+  const onCheckEmail = async () => {
+    if (userIdError) {
+      alert("이메일 형식인지 확인해주세요");
+      return;
+    }
+    const res = await axios
+      .post("http:/local/3000/api/user/dup/email", checkEmail)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          alert("사용가능한 이메일입니다");
+          setDupEmail(true);
+        }
+      })
+      .catch((res) => {
+        if (res.response.status === 409) {
+          alert("이미 가입된 이메일입니다");
+        }
+      });
+  };
+  //이메일 중복확인란
+  const onChecknickname = async () => {
+    if (nicknameError) {
+      alert("닉네임 형식에 맞게 입력해주세요");
+      return;
+    }
+    const res = await axios
+      .post("http://local/3000/api/user/dup/nickname", checknickname)
+      .then((res) => {
+        if (res.status === 200) {
+          alert("사용가능한 닉네임입니다");
+          setDupnickname(true);
+        }
+      })
+      .catch((res) => {
+        if (res.response.status === 409) {
+          alert("이미 가입된 닉네임입니다");
+        }
+      });
+  };
+
+  const onSubmit = async () => {
+    // if (validation()) {
+    //   return;
+    // }
+    if (!userId) setUserIdError(true);
+    if (!password) setPasswordError(true);
+    if (!confirmPassword) setConfirmPasswordError(true);
+    if (!nickname) setnicknameError(true);
+    if (!userId || !nickname || !password || !confirmPassword) {
+      return alert("다시 입력해주세요");
+    }
+
+    if (
+      userId !== "" &&
+      nickname !== "" &&
+      password !== "" &&
+      confirmPassword !== ""
+    ) {
+      if (dupEmail === false) {
+        alert("이메일 중복확인을 완료해주세요");
+        return;
+      } else if (dupnickname === false) {
+        alert("닉네임 중복확인을 완료해주세요");
+        return;
+      }
+      await axios
+        .post("http:/local/3000/api/user/signup", data)
+        .then((response) => {
+          if (response.status === 200) {
+            navigate("/login");
+          }
+        })
+        .catch((response) => {
+          if (response.response.status === 500) {
+            alert("다시 한 번 확인해주세요");
+          } else if (response.response.status === 400) {
+            alert("입력 양식을 확인해주세요");
+          }
+        });
+    }
   };
 
   return (
@@ -28,16 +201,16 @@ function RegisterPage() {
         // action="나중에 서버url"
         >
           <div className="wrap">
-            <PostImgBox />
+            <PostImgBox postImg={previewImg} />
 
             <input
               id="img"
               type="file"
               accept="image/jpg,image/png,image/jpeg,image/gif"
-              placeholder="프로필 이미지를 선택해주세요"
+              onChange={OnChangeFile}
             />
             <label id="imglabel" htmlFor="img">
-              파일선택
+              파일 선택
             </label>
           </div>
           <div>
@@ -57,8 +230,14 @@ function RegisterPage() {
               type="text"
               placeholder="닉네임을 입력해주세요"
               required
+              minLength={2}
+              maxLength={12}
+              onChange={(e) => {
+                onChangenickname(e);
+                setDupnickname(false);
+              }}
             />
-            <button>닉네임 중복확인</button>
+            <button onClick={onChecknickname}>닉네임 중복확인</button>
           </div>
           <div>
             <input
@@ -67,6 +246,7 @@ function RegisterPage() {
               type="password"
               placeholder="비밀번호를 입력해주세요"
               required
+              onChange={onChangePassword}
             />
           </div>
           <div>
@@ -75,11 +255,12 @@ function RegisterPage() {
               type="password"
               placeholder="비밀번호를 확인해주세요"
               required
+              onChange={onChangeConfirmPassword}
             />
           </div>
           <ButtonBox>
             <input id="signup" className="signupsubmit" type="submit"></input>
-            <label id="signuplabel" htmlFor="signup">
+            <label id="signuplabel" htmlFor="signup" onClick={onSubmit}>
               회원가입
             </label>
           </ButtonBox>
@@ -89,7 +270,7 @@ function RegisterPage() {
             <button>회원가입</button>
           </div> */}
           <div className="button">
-            <button>로그인</button>
+            <button onClick={() => navigate("/login")}>로그인</button>
           </div>
         </ButtonBox>
       </div>
@@ -102,13 +283,11 @@ export default RegisterPage;
 const STArrowBox = styled.div`
   /* background-color: coral; */
   box-sizing: border-box;
-  /* margin: 20px 0; */
   padding: 10px 5px;
 `;
 
 const StTitleBox = styled.div`
   padding: 5px;
-  margin: 5px 0px;
 
   em {
     font-size: 20px;
@@ -244,9 +423,9 @@ const PostImgBox = styled.div`
   width: 200px;
   /* margin-bottom: 10px; */
   border-radius: 50%;
-  /* background-image: url(${(props) => props.postImg}); */
+  background-image: url(${(props) => props.postImg});
   /* background-image: url("../image/image_cucumber.png"); */
-  background-image: url("https://www.daangn.com/logo.png");
+  /* background-image: url("https://www.daangn.com/logo.png"); */
   background-size: cover;
   //div박스가 300*300일때, 이미지가 100*300짜리라면? 꽉 차지 않음 -> 꽉 차게 비율맞춰 늘어난다.
   //but, 어느 곳이 잘릴 수 있음 / div박스크기에 이미지 사이즈 맞춤

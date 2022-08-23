@@ -89,13 +89,16 @@ const Buttonbox = styled.div`
   & button {
     /* width: 100%;
     box-sizing: border-box; */
-    width: 80%;
+    background-color: #72a740;
+    color: #fff;
+    box-sizing: border-box;
     border-radius: 5px;
     border: none;
-    padding: 10px;
-    background-color: #72a740;
-    box-sizing: border-box;
-    margin: 10px;
+    width: 80%;
+
     cursor: pointer;
+
+    padding: 10px;
+    margin: 10px;
   }
 `;
