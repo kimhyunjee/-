@@ -6,11 +6,15 @@ function StartPage() {
   const navigate = useNavigate();
 
   const onClickSNSButton = () => {
-    navigate("/login");
+    navigate("/snslogin");
   };
 
   const onClickSignUpButton = () => {
     navigate("/signup");
+  };
+
+  const onClickLogInButton = () => {
+    navigate("/login");
   };
 
   return (
@@ -34,6 +38,9 @@ function StartPage() {
             SNS 계정으로 3초만에 시작하기
           </button>
           <button onClick={onClickSignUpButton}> 회원가입하기 </button>
+          <p>
+            이미 계정이 있나요? <span onClick={onClickLogInButton}>로그인</span>
+          </p>
         </Buttonbox>
       </Container>
     </>
@@ -100,5 +107,11 @@ const Buttonbox = styled.div`
 
     padding: 10px;
     margin: 10px;
+  }
+  & p {
+    font-size: 12px;
+  }
+  & span {
+    cursor: pointer;
   }
 `;

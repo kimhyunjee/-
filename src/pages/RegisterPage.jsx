@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { BiArrowBack } from "react-icons/bi";
 
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
@@ -8,30 +9,9 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Formik } from "formik";
 
 function RegisterPage() {
   const navigate = useNavigate();
-
-  const [userId, setUserId] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [nickname, setnickname] = useState("");
-
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-    nickname: "",
-  });
-
-  const [userIdError, setUserIdError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
-  const [nicknameError, setnicknameError] = useState(false);
-  const [checkEmail, setCheckEmail] = useState({ email: "" });
-  const [checknickname, setChecknickname] = useState({ nickname: "" });
-  const [dupEmail, setDupEmail] = useState(false);
-  const [dupnickname, setDupnickname] = useState(false);
 
   //파일 미선택시 미리보기이미지
   const [previewImg, setPreviewImg] = useState(
@@ -54,133 +34,25 @@ function RegisterPage() {
     };
     reader.readAsDataURL(file);
   };
-  //유저아이디(이메일아이디) 받는곳 체크
-  const onChangeUseId = (e) => {
-    const userIdRegex =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,13}$/;
 
-    if (!e.target.value || userIdRegex.test(e.target.value))
-      setUserIdError(false);
-    else setUserIdError(true);
-    setUserId(e.target.value);
-    setData({ ...data, email: e.target.value });
-    setCheckEmail({ email: e.target.value });
-  };
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  // console.log(watch("email"));
 
-  //비밀번호 유효성
-  const onChangePassword = (e) => {
-    const passwordRegex =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,13}$/;
-    if (!e.target.value || passwordRegex.test(e.target.value))
-      setPasswordError(false);
-    else setPasswordError(true);
+  //비밀번호 값 가져오기
+  const password = useRef();
+  password.current = watch("password");
+  // console.log(password.current);
 
-    if (!confirmPassword || e.target.value === confirmPassword)
-      setConfirmPasswordError(false);
-    else setConfirmPasswordError(true);
-    setPassword(e.target.value);
-    setData({ ...data, password: e.target.value });
-  };
-  //비밀번호 확인 체크
-  const onChangeConfirmPassword = (e) => {
-    if (password === e.target.value) setConfirmPasswordError(false);
-    else setConfirmPasswordError(true);
-    setConfirmPassword(e.target.value);
-    // setData({ ...data, confirmPassword: e.target.value });
-  };
+  const onSubmit = (data) => {
+    console.log(data);
+    console.log(data.email);
 
-  //닉네임 유효성체크
-  const onChangenickname = (e) => {
-    const nicknameRegex = /^[a-zA-Zㄱ-힣0-9-_.]{2,12}$/;
-    if (!e.target.value || nicknameRegex.test(e.target.value))
-      setnicknameError(false);
-    else setnicknameError(true);
-    setnickname(e.target.value);
-    setData({ ...data, nickname: e.target.value });
-    setChecknickname({ nickname: e.target.value });
-  };
-  //이메일 유효성 체크
-  const onCheckEmail = async () => {
-    if (userIdError) {
-      alert("이메일 형식인지 확인해주세요");
-      return;
-    }
-    const res = await axios
-      .post("http:/local/3000/api/user/dup/email", checkEmail)
-      .then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          alert("사용가능한 이메일입니다");
-          setDupEmail(true);
-        }
-      })
-      .catch((res) => {
-        if (res.response.status === 409) {
-          alert("이미 가입된 이메일입니다");
-        }
-      });
-  };
-  //이메일 중복확인란
-  const onChecknickname = async () => {
-    if (nicknameError) {
-      alert("닉네임 형식에 맞게 입력해주세요");
-      return;
-    }
-    const res = await axios
-      .post("http://local/3000/api/user/dup/nickname", checknickname)
-      .then((res) => {
-        if (res.status === 200) {
-          alert("사용가능한 닉네임입니다");
-          setDupnickname(true);
-        }
-      })
-      .catch((res) => {
-        if (res.response.status === 409) {
-          alert("이미 가입된 닉네임입니다");
-        }
-      });
-  };
-
-  const onSubmit = async () => {
-    // if (validation()) {
-    //   return;
-    // }
-    if (!userId) setUserIdError(true);
-    if (!password) setPasswordError(true);
-    if (!confirmPassword) setConfirmPasswordError(true);
-    if (!nickname) setnicknameError(true);
-    if (!userId || !nickname || !password || !confirmPassword) {
-      return alert("다시 입력해주세요");
-    }
-
-    if (
-      userId !== "" &&
-      nickname !== "" &&
-      password !== "" &&
-      confirmPassword !== ""
-    ) {
-      if (dupEmail === false) {
-        alert("이메일 중복확인을 완료해주세요");
-        return;
-      } else if (dupnickname === false) {
-        alert("닉네임 중복확인을 완료해주세요");
-        return;
-      }
-      await axios
-        .post("http:/local/3000/api/user/signup", data)
-        .then((response) => {
-          if (response.status === 200) {
-            navigate("/login");
-          }
-        })
-        .catch((response) => {
-          if (response.response.status === 500) {
-            alert("다시 한 번 확인해주세요");
-          } else if (response.response.status === 400) {
-            alert("입력 양식을 확인해주세요");
-          }
-        });
-    }
+    // axios.post('/',data) //나중에 백엔드에 전달
   };
 
   return (
@@ -198,11 +70,12 @@ function RegisterPage() {
           <p>이메일 주소는 안전하게 보관되며 이웃들에게 공개되지 않아요</p>
         </StTitleBox>
         <Form
-        // action="나중에 서버url"
+          // action="나중에 서버url"
+          onSubmit={handleSubmit(onSubmit)}
         >
           <div className="wrap">
             <PostImgBox postImg={previewImg} />
-
+            {/* 실제이미지받는곳 */}
             <input
               id="img"
               type="file"
@@ -217,10 +90,20 @@ function RegisterPage() {
             <input
               className="check"
               id="email"
-              type="email"
+              type="text"
               placeholder="이메일을 입력해주세요"
-              required
+              {...register("email", {
+                required: true,
+                pattern: /\S+@\S+\.\S+/,
+              })}
             />
+            {errors.email && errors.email.type === "required" && (
+              <p>빈칸을 입력해주세요</p>
+            )}
+            {errors.email && errors.email.type === "pattern" && (
+              <p>이메일 형식을 지켜주세요</p>
+            )}
+
             <button>이메일 중복확인</button>
           </div>
           <div>
@@ -229,15 +112,22 @@ function RegisterPage() {
               id="nickName"
               type="text"
               placeholder="닉네임을 입력해주세요"
-              required
-              minLength={2}
-              maxLength={12}
-              onChange={(e) => {
-                onChangenickname(e);
-                setDupnickname(false);
-              }}
+              {...register("nickname", {
+                required: true,
+                minLength: 2,
+                maxLength: 8,
+              })}
             />
-            <button onClick={onChecknickname}>닉네임 중복확인</button>
+            {errors.nickname && errors.nickname.type === "required" && (
+              <p>빈칸을 입력해주세요</p>
+            )}
+            {errors.nickname && errors.nickname.type === "minLength" && (
+              <p>2-8자 사이로 적어주세요</p>
+            )}
+            {errors.nickname && errors.nickname.type === "maxLength" && (
+              <p>2-8자 사이로 적어주세요</p>
+            )}
+            <button>닉네임 중복확인</button>
           </div>
           <div>
             <input
@@ -245,22 +135,44 @@ function RegisterPage() {
               id="password"
               type="password"
               placeholder="비밀번호를 입력해주세요"
-              required
-              onChange={onChangePassword}
+              ref={password}
+              {...register("password", {
+                required: true,
+                minLength: 8,
+                maxLength: 13,
+                pattern:
+                  /^.*(?=^.{8,13}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/,
+              })}
             />
+            {errors.password && errors.password.type === "required" && (
+              <p>빈칸을 입력해주세요</p>
+            )}
+            {errors.password && errors.password.type === "pattern" && (
+              <p>8-13글자사이,영문,숫자,특수문자를 섞어주세요</p>
+            )}
           </div>
           <div>
             <input
               className="nonecheck"
               type="password"
               placeholder="비밀번호를 확인해주세요"
-              required
-              onChange={onChangeConfirmPassword}
+              {...register("confirmpassword", {
+                required: true,
+                validate: (value) => value === password.current,
+              })}
             />
+            {errors.confirmpassword &&
+              errors.confirmpassword.type === "validate" && (
+                <p>비밀번호가 일치하지 않습니다</p>
+              )}
+            {errors.cconfirmpassword &&
+              errors.confirmpassword.type === "required" && (
+                <p>빈칸을 입력해주세요</p>
+              )}
           </div>
           <ButtonBox>
             <input id="signup" className="signupsubmit" type="submit"></input>
-            <label id="signuplabel" htmlFor="signup" onClick={onSubmit}>
+            <label id="signuplabel" htmlFor="signup">
               회원가입
             </label>
           </ButtonBox>
