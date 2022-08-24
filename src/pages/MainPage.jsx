@@ -1,39 +1,73 @@
 import styled from "styled-components";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import { IoIosSearch } from "react-icons/io";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { AiFillHome } from "react-icons/ai";
-import { BiUser } from "react-icons/bi";
+import { BiUser, BiCurrentLocation, BiBell, BiSearch} from "react-icons/bi";
 
-function MainPage() {
+
+const MainPage= () => {  
+  const navigate = useNavigate();
+  const [posts, setPosts] = useState([]); 
+
+  const getPosts = async () => {
+    const response = await axios.get("http://54.180.128.147/api/post"); 
+    setPosts(response.data.post); // 콘솔에 찍힌 값으로 setPost를 이용해 post를 state를 변경 2
+    //console.log(post) // state 변경 후 post 값이 잘 들어갔는지 확인 3
+    //console.log(response.data) // 1
+    console.log(response.data.post)
+  }
+  console.log(posts)
+  console.log(posts.location)
+
+  console.log(posts)
+
+  useEffect(() => {
+    getPosts() 
+  }, []);
+
   return (
     <>
       <StMaincontainer>
         <StHeadercontainer>
-          <div className="userlocation">서울</div>
+          <BiCurrentLocation 
+            size={23}/>
+          <UserLocation>서울시</UserLocation>
           <div className="searchbox">
-            <input />
-            <button>
-              <IoIosSearch />
-              게시물 찾기
-            </button>
+            <BiSearch 
+              size={25}/>
+          </div>
+          <div className="alarm">
+            <BiBell 
+              size={25}/>
           </div>
         </StHeadercontainer>
-        <hr></hr>
         <StBodycontainer>
           <hr />
-          <Content>
-            <Img>img</Img>
-            <Title>자급제 화이트 미개봉</Title>
-            <Location>군자동</Location>
-            <Price>75,000원</Price>
-            <Like>Like : 7</Like>
-            <hr />
-          </Content>
-          
-          {/* <StListUl>
-            {.map돌리는 부분}
-          </StListUl> */}
+            {posts.map((post)=>{  //response가 담기게 된 새로운 state인 post에 map을 돌린다.
+              return (
+                <div key={post.postId}>
+                  <Content
+                    onClick={()=>{
+                      navigate(`/post/${post.postId}`)
+                    }}>
+                  <div>
+                  <Img>img</Img>
+                  </div>
+                  <div>
+                  <Title>{post.title}</Title>
+                  <Location>{post.location}</Location>
+                  <Price>{post.price}</Price>
+                  <Like>{post.like}</Like>
+                  </div>
+                  </Content>
+                  <hr />
+                </div>
+              )
+            })}
           <button className="buttonbox">
             <BsFillPlusCircleFill />
           </button>
@@ -42,11 +76,11 @@ function MainPage() {
           <div className="bottomMenubar">
             <div className="bottomMenuBox">
               <AiFillHome size="30px" />
-              <p>홈</p>
+              <p className="gohome">홈</p>
             </div>
             <div className="bottomMenuBox">
               <BiUser size="30px" />
-              <p> 나의 오이</p>
+              <p className="godetail"> 나의 오이</p>
             </div>
           </div>
         </StFootercontainer>
@@ -58,12 +92,16 @@ function MainPage() {
 export default MainPage;
 
 const Content = styled.div`
-  
+  cursor: pointer;
+  padding: 5px;
 `
 const Img = styled.div`
   
 `
 const Title = styled.div`
+  
+`
+const UserLocation = styled.div`
   
 `
 const Location = styled.div`
@@ -75,28 +113,52 @@ const Price = styled.div`
 const Like = styled.div`
   
 `
+const gohome = styled.div`
+  cursor: pointer;
+`
+const godetail = styled.div`
+  cursor: pointer;
+`
 const StMaincontainer = styled.div``;
 
 const StHeadercontainer = styled.div`
-  background-color: bisque;
-
+  background-color: #acd137;
   height: 50px;
   margin: 20px 0;
   padding: 0 10px;
   display: flex;
   justify-content: space-between;
+      
 
   & .userlocation {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
     flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+    margin-left: 10px;
+    cursor: pointer;
   }
 
   & .searchbox {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 295px;
+    cursor: pointer;
+  }
+
+  .alarm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  svg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 
   /* & input {
@@ -108,9 +170,10 @@ const StHeadercontainer = styled.div`
 
 const StBodycontainer = styled.div`
   flex: 1;
-  background-color: aqua;
+  background-color: white;
   height: 70vh;
   margin: 20px;
+  overflow-y: scroll;
 
   .buttonbox {
     display: flex;
@@ -140,7 +203,7 @@ const StBodycontainer = styled.div`
 // `;
 
 const StFootercontainer = styled.div`
-  background-color: bisque;
+  background-color: #acd137;
   height: 60px;
   /* position: fixed; */
   /* display: flex; */
