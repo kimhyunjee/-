@@ -24,13 +24,13 @@ function SNSLogInPage() {
         </StTitleBox>
         <StIconBox>
           <div className="logo">
-            <ImGoogle2 size="40px" />
+            <ImGoogle2 size="40px" color="red" />
           </div>
           <div className="logo">
-            <SiKakaotalk size="40px" />
+            <SiKakaotalk size="40px" color="f9e000" />
           </div>
           <div className="logo">
-            <SiNaver size="40px" />
+            <SiNaver size="40px" color="2de400" />
           </div>
         </StIconBox>
       </div>

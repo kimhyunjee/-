@@ -113,5 +113,6 @@ const Buttonbox = styled.div`
   }
   & span {
     cursor: pointer;
+    color: blue;
   }
 `;
