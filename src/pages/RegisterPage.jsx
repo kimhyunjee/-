@@ -86,7 +86,7 @@ function RegisterPage() {
               파일 선택
             </label>
           </div>
-          <div>
+          <div className="inputbox">
             <input
               className="check"
               id="email"
@@ -97,16 +97,18 @@ function RegisterPage() {
                 pattern: /\S+@\S+\.\S+/,
               })}
             />
-            {errors.email && errors.email.type === "required" && (
-              <p>빈칸을 입력해주세요</p>
-            )}
-            {errors.email && errors.email.type === "pattern" && (
-              <p>이메일 형식을 지켜주세요</p>
-            )}
+            <ErrorMessage>
+              {errors.email && errors.email.type === "required" && (
+                <p>빈칸을 입력해주세요</p>
+              )}
+              {errors.email && errors.email.type === "pattern" && (
+                <p>이메일 형식을 지켜주세요</p>
+              )}
+            </ErrorMessage>
 
             <button>이메일 중복확인</button>
           </div>
-          <div>
+          <div className="inputbox">
             <input
               className="check"
               id="nickName"
@@ -118,18 +120,20 @@ function RegisterPage() {
                 maxLength: 8,
               })}
             />
-            {errors.nickname && errors.nickname.type === "required" && (
-              <p>빈칸을 입력해주세요</p>
-            )}
-            {errors.nickname && errors.nickname.type === "minLength" && (
-              <p>2-8자 사이로 적어주세요</p>
-            )}
-            {errors.nickname && errors.nickname.type === "maxLength" && (
-              <p>2-8자 사이로 적어주세요</p>
-            )}
+            <ErrorMessage>
+              {errors.nickname && errors.nickname.type === "required" && (
+                <p>빈칸을 입력해주세요</p>
+              )}
+              {errors.nickname && errors.nickname.type === "minLength" && (
+                <p>2-8자 사이로 적어주세요</p>
+              )}
+              {errors.nickname && errors.nickname.type === "maxLength" && (
+                <p>2-8자 사이로 적어주세요</p>
+              )}
+            </ErrorMessage>
             <button>닉네임 중복확인</button>
           </div>
-          <div>
+          <div className="inputbox">
             <input
               className="nonecheck"
               id="password"
@@ -144,14 +148,16 @@ function RegisterPage() {
                   /^.*(?=^.{8,13}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/,
               })}
             />
-            {errors.password && errors.password.type === "required" && (
-              <p>빈칸을 입력해주세요</p>
-            )}
-            {errors.password && errors.password.type === "pattern" && (
-              <p>8-13글자사이,영문,숫자,특수문자를 섞어주세요</p>
-            )}
+            <ErrorMessage>
+              {errors.password && errors.password.type === "required" && (
+                <p>빈칸을 입력해주세요</p>
+              )}
+              {errors.password && errors.password.type === "pattern" && (
+                <p>8-13글자사이,영문,숫자,특수문자를 섞어주세요</p>
+              )}
+            </ErrorMessage>
           </div>
-          <div>
+          <div className="inputbox">
             <input
               className="nonecheck"
               type="password"
@@ -161,14 +167,16 @@ function RegisterPage() {
                 validate: (value) => value === password.current,
               })}
             />
-            {errors.confirmpassword &&
-              errors.confirmpassword.type === "validate" && (
-                <p>비밀번호가 일치하지 않습니다</p>
-              )}
-            {errors.cconfirmpassword &&
-              errors.confirmpassword.type === "required" && (
-                <p>빈칸을 입력해주세요</p>
-              )}
+            <ErrorMessage>
+              {errors.cconfirmpassword &&
+                errors.confirmpassword.type === "required" && (
+                  <p>빈칸을 입력해주세요</p>
+                )}
+              {errors.confirmpassword &&
+                errors.confirmpassword.type === "validate" && (
+                  <p>비밀번호가 일치하지 않습니다</p>
+                )}
+            </ErrorMessage>
           </div>
           <ButtonBox>
             <input id="signup" className="signupsubmit" type="submit"></input>
@@ -177,14 +185,6 @@ function RegisterPage() {
             </label>
           </ButtonBox>
         </Form>
-        <ButtonBox>
-          {/* <div className="button">
-            <button>회원가입</button>
-          </div> */}
-          <div className="button">
-            <button onClick={() => navigate("/login")}>로그인</button>
-          </div>
-        </ButtonBox>
       </div>
     </>
   );
@@ -288,12 +288,25 @@ const Form = styled.form`
     padding: 0 10px;
     margin: 10px;
   }
+  & .inputbox {
+    position: relative;
+  }
+`;
+
+const ErrorMessage = styled.div`
+  color: red;
+  font-size: 10px;
+  position: absolute;
+  top: 45px;
+  left: 10px;
 `;
 
 const ButtonBox = styled.div`
   width: 100%;
   transform: translateY(20px);
   text-align: center;
+  display: flex;
+  justify-content: center;
 
   //실제회원가입버튼 안보이게 처리
   & .signupsubmit {
@@ -307,23 +320,14 @@ const ButtonBox = styled.div`
   }
   //회원가입버튼과 원격연결된 보여지는 라벨
   & #signuplabel {
+    display: block;
     background-color: #acd137;
+    color: #fff;
     border: none;
     border-radius: 20px;
     box-sizing: border-box;
-    /* width: 80%; */
-    width: 500px;
     cursor: pointer;
-    padding: 10px;
-    margin: 10px;
-  }
-  & button {
-    background-color: #acd137;
-    border: none;
-    border-radius: 20px;
-    box-sizing: border-box;
     width: 80%;
-    cursor: pointer;
     padding: 10px;
     margin: 10px;
   }
