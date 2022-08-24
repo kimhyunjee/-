@@ -39,7 +39,7 @@ function LogInPage() {
   const onSubmit = async (data) => {
     axios.post("http://54.180.128.147/api/auth/logIn", data).then((res) => {
       console.log(res);
-      if (res.result.status === "200") {
+      if (res.status === 200) {
         navigate("/main", { replace: true });
       } else {
         alert("로그인에 실패하였습니다");

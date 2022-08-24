@@ -22,27 +22,10 @@ import { useForm } from "react-hook-form";
 function RegisterPage() {
   const navigate = useNavigate();
 
-  // useEffect(async () => {
-  //   console.log(db);
-  //   // //데이터 가져오기
-  //   // const query = await getDocs(collection(db, "market"));
-  //   // console.log(query);
-  //   // query.forEach((doc) => {
-  //   //   //반복문, array의 내장함수가 아니라, getDocs의 도큐먼트들 모음 객체 내장함수
-  //   //   console.log(doc.id, doc.data());
-  //   // });
-
-  //   //도큐먼트 추가하기
-  //   // addDoc(collection(db, "market"), { text: "new", required: false });
-
-  //   //수정하기
-  //   // const docRef = doc(db, "market", "d6Ifl5F1H1Iq681tlWOB");
-  //   // updateDoc(docRef, { required: true });
-
-  //   //삭제하기
-  //   const docRef = doc(db, "market", "d6Ifl5F1H1Iq681tlWOB");
-  //   deleteDoc(docRef);
-  // }, []);
+  //뒤로가기버튼
+  const onClickBackButton = () => {
+    navigate("/");
+  };
 
   //파일 미선택시 미리보기이미지
   const [previewImg, setPreviewImg] = useState(
@@ -50,15 +33,19 @@ function RegisterPage() {
   );
   // const [ profile setProfile] = useState("https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png");
 
-  //뒤로가기버튼
-  const onClickBackButton = () => {
-    navigate("/");
-  };
-
   //
   const [dupEmail, setDupEmail] = useState(false);
   const [dupNickname, setDupNickname] = useState(false);
   const [profile, setProfile] = useState("");
+
+  //유효성검사
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  // console.log(watch("email"));
 
   //이메일 값 가져오기
   const email = useRef();
@@ -74,6 +61,11 @@ function RegisterPage() {
   const nickname = useRef();
   nickname.current = watch("nickname");
   // console.log(nickname.current);
+
+  // //프로필사진 가져오기
+  // const profileImgUrl = useRef();
+  // profileImgUrl.current = watch("profileImgUrl");
+
   //프로필 사진 미리보기
   const OnChangeFile = async (e) => {
     e.preventDefault();
@@ -93,31 +85,18 @@ function RegisterPage() {
   };
   console.log(previewImg);
 
-  //useForm
-  const {
-    register,
-    watch,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  // console.log(watch("email"));
-
-  //변경값(인풋)가져오기
-  const onSubmit = (data) => {
+  //회원가입시도
+  const onSubmit = async (data) => {
     console.log(data);
     // console.log(data.email);
-    // console.log({ ...data, file });
-
-    // axios.post('/',data) //나중에 백엔드에 전달
-  };
-
-  const signup = async () => {
-    const user = await createUserWithEmailAndPassword(
-      auth,
-      "ysk@dev.com",
-      "devdev123!"
-    );
-    console.log(user);
+    axios.post("http://54.180.128.147/api/auth/signUp", data).then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        navigate("/login", { replace: true });
+      } else {
+        alert("입력정보를 다시 확인해주세요");
+      }
+    });
   };
 
   return (
@@ -246,7 +225,7 @@ function RegisterPage() {
           </div>
           <ButtonBox>
             <input id="signup" className="signupsubmit" type="submit"></input>
-            <label id="signuplabel" htmlFor="signup" onClick={signup}>
+            <label id="signuplabel" htmlFor="signup">
               회원가입
             </label>
           </ButtonBox>
