@@ -1,14 +1,10 @@
 import styled from "styled-components";
 import { BiArrowBack } from "react-icons/bi";
 
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import axios from "axios";
-
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import axios from "axios";
 
 function LogInPage() {
   const navigate = useNavigate();
@@ -18,6 +14,7 @@ function LogInPage() {
     navigate("/");
   };
 
+  //유효성검사
   const {
     register,
     watch,
@@ -26,17 +23,31 @@ function LogInPage() {
   } = useForm();
   // console.log(watch("email"));
 
+  //이메일 값 가져오기
+  const email = useRef();
+  email.current = watch("email");
+  // console.log(email.current);
+
   //비밀번호 값 가져오기
   const password = useRef();
   password.current = watch("password");
   // console.log(password.current);
 
-  const onSubmit = (data) => {
-    console.log(data);
-    console.log(data.email);
+  useEffect(() => {}, []);
 
-    // axios.post('/',data) //나중에 백엔드에 전달
+  //로그인시도
+  const onSubmit = async (data) => {
+    axios.post("http://54.180.128.147/api/auth/logIn", data).then((res) => {
+      console.log(res);
+      if (res.result.status === "200") {
+        navigate("/main", { replace: true });
+      } else {
+        alert("로그인에 실패하였습니다");
+      }
+    });
   };
+  //userinfo에 이메일,비밀번호 양식 맞춰서 값 넣어주고 POST요청 끝나고 (then) result.status가 200일 때(result response값에 쿠키넣어줘야하는데 res없음)
+  // 메인화면으로 넘겨주기
 
   return (
     <>
@@ -105,7 +116,7 @@ function LogInPage() {
           <ButtonBox>
             <input id="login" className="loginsubmit" type="submit"></input>
             <label id="loginlabel" htmlFor="login">
-              회원가입
+              로그인
             </label>
           </ButtonBox>
         </Form>
