@@ -10,7 +10,6 @@ import DetailPage from "../pages/DetailPage";
 import MyPage from "../pages/MyPage";
 import PostPage from "../pages/PostPage";
 import StartPage from "../pages/StartPage";
-import Posting from "../components/post/Posting";
 import EditPage from "../pages/EditPage";
 
 function Router() {
@@ -18,7 +17,6 @@ function Router() {
     <BrowserRouter>
       <Layout>
         {/* <Header /> */}
-
         <Routes>
           <Route path="/" element={<StartPage />} />
           <Route path="/main" element={<MainPage />} />

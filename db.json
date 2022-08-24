@@ -1,23 +1,44 @@
 {
-  "post":[
+  "post": [
     {
-    "postId":1,
-    "title": "오이 에어팟",
-    "imageUrl":"URL",
-    "like": 5,
-    "nickname": "네고왕",
-    "price": "50,000",
-    "location" : "강원도 원주시"
-   },
-   {
-    "postId": 2,
-    "title": "딸기 에어팟",
-    "imageUrl":"URL",
-    "like": 10,
-    "nickname": "오이보다 딸기",
-    "price": "10,000",
-    "location" : "경기도 수원시"
-   }
+      "imageUrl": "",
+      "title": "ㅁㄴ",
+      "location": "ㅁㄴ",
+      "price": "111",
+      "content": "ㅁㄴ",
+      "id": 2
+    },
+    {
+      "file": "",
+      "title": "ㅁㄴ",
+      "location": "ㅁㄴ",
+      "price": "111",
+      "content": "ㅁㄴ",
+      "id": 4
+    },
+    {
+      "file": "",
+      "title": "ㅁㄴㅇ",
+      "location": "ㅁㄴㅇ",
+      "price": "222",
+      "content": "ㅁㄴㅇ",
+      "id": 5
+    },
+    {
+      "id": 6
+    },
+    {
+      "id": 7
+    },
+    {
+      "id": 8
+    },
+    {
+      "id": 9
+    },
+    {
+      "id": 10
+    }
   ],
   "comments": [
     {
