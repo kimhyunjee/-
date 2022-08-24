@@ -1,40 +1,44 @@
 import styled from "styled-components";
 import { BiArrowBack } from "react-icons/bi";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import {
+  collection,
+  doc,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
+import { auth, db, storage } from "../shared/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { ref, uploadBytes } from "firebase/storage";
 
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 
 function RegisterPage() {
   const navigate = useNavigate();
-
-  //파일 미선택시 미리보기이미지
-  const [previewImg, setPreviewImg] = useState(
-    "https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png"
-  );
 
   //뒤로가기버튼
   const onClickBackButton = () => {
     navigate("/");
   };
 
-  //프로필 사진 받아오기
-  const OnChangeFile = async (e) => {
-    e.preventDefault();
-    let reader = new FileReader();
+  //파일 미선택시 미리보기이미지
+  const [previewImg, setPreviewImg] = useState(
+    "https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png"
+  );
+  // const [ profile setProfile] = useState("https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png");
 
-    let file = e.target.files[0];
-    reader.onloadend = () => {
-      setPreviewImg(reader.result);
-    };
-    reader.readAsDataURL(file);
-  };
+  //
+  const [dupEmail, setDupEmail] = useState(false);
+  const [dupNickname, setDupNickname] = useState(false);
+  const [profile, setProfile] = useState("");
 
+  //유효성검사
   const {
     register,
     watch,
@@ -43,16 +47,56 @@ function RegisterPage() {
   } = useForm();
   // console.log(watch("email"));
 
+  //이메일 값 가져오기
+  const email = useRef();
+  email.current = watch("email");
+  // console.log(email.current);
+
   //비밀번호 값 가져오기
   const password = useRef();
   password.current = watch("password");
   // console.log(password.current);
 
-  const onSubmit = (data) => {
-    console.log(data);
-    console.log(data.email);
+  //닉네임 값 가져오기
+  const nickname = useRef();
+  nickname.current = watch("nickname");
+  // console.log(nickname.current);
 
-    // axios.post('/',data) //나중에 백엔드에 전달
+  // //프로필사진 가져오기
+  // const profileImgUrl = useRef();
+  // profileImgUrl.current = watch("profileImgUrl");
+
+  //프로필 사진 미리보기
+  const OnChangeFile = async (e) => {
+    e.preventDefault();
+    // console.log(e.target.files); //여기까지 잘나옴
+    // const uploadfile = await uploadBytes(
+    //   ref(storage, `images/${e.target.files[0].name}`),
+    //   e.target.file[0]
+    // );
+    // console.log(uploadfile); //파일리스트로 잘 나옴 근데 백으로보내줄주소 못받음
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.onloadend = () => {
+      setPreviewImg(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+  console.log(previewImg);
+
+  //회원가입시도
+  const onSubmit = async (data) => {
+    console.log(data);
+    // console.log(data.email);
+    axios.post("http://54.180.128.147/api/auth/signUp", data).then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        navigate("/login", { replace: true });
+      } else {
+        alert("입력정보를 다시 확인해주세요");
+      }
+    });
   };
 
   return (
@@ -75,12 +119,13 @@ function RegisterPage() {
         >
           <div className="wrap">
             <PostImgBox postImg={previewImg} />
-            {/* 실제이미지받는곳 */}
+            {/* 실제이미지받는곳 아래쪽에 src가 아니라 여긴가...?*/}
             <input
               id="img"
               type="file"
               accept="image/jpg,image/png,image/jpeg,image/gif"
               onChange={OnChangeFile}
+              // src: ""; //나중에 여기에 백엔드에서(s3) 보내주는 이미지 주소 넣으면됨
             />
             <label id="imglabel" htmlFor="img">
               파일 선택
