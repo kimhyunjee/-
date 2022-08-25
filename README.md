@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+# cucumber market
+5명이서 모인 2조!
+5252! 오이(52) 마켓입니다 💚
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 프로젝트 소개
 
-## Available Scripts
+당근마켓 클론코딩입니다
 
-In the project directory, you can run:
+## 시연영상
 
-### `yarn start`
+프론트엔드 GitHub주소:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+[https://github.com/cucumber-market/cucumber-front](https://github.com/cucumber-market/cucumber-front)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- 김현지: 로그인, 회원가입
+- 이하경 : 메인페이지, 상세페이지
 
-### `yarn test`
+백엔드 GitHub  주소 :
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+[https://github.com/cucumber-market/cucumber-back](https://github.com/cucumber-market/cucumber-back)
 
-### `yarn build`
+- 조권영 : 메인페이지
+- 이지훈: 로그인, 회원가입
+- 최성영 : 상세페이지
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 와이어프레임
+### 시작페이지
+![start](https://user-images.githubusercontent.com/107829027/186661581-074ac7f7-1c24-4569-bd61-09639f373b67.png)
+### 소셜 로그인 페이지
+![sns](https://user-images.githubusercontent.com/107829027/186661719-03359677-69e3-42ab-b850-717eace9f891.png)
+### 회원가입 페이지
+![signup](https://user-images.githubusercontent.com/107829027/186661740-fddc23b7-da80-4b23-8654-5109c3754fd3.png)
+### 로그인페이지
+![login](https://user-images.githubusercontent.com/107829027/186661750-8d62ad7f-f98b-4da0-aad6-e90c58bbca3b.png)
+### 메인페이지
+![main](https://user-images.githubusercontent.com/107829027/186662067-890ffbe5-550f-4172-bd49-0d76df903106.png)
+### 디테일페이지
+![detail2](https://user-images.githubusercontent.com/107829027/186662089-ce46dc4b-b139-45f9-86e4-6b243a3e4a70.png)
