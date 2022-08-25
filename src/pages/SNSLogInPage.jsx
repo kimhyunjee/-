@@ -3,12 +3,21 @@ import { BiArrowBack } from "react-icons/bi";
 import { SiKakaotalk, SiNaver } from "react-icons/si";
 import { ImGoogle2 } from "react-icons/im";
 import styled from "styled-components";
+import axios from "axios";
 
 function SNSLogInPage() {
   const navigate = useNavigate();
 
   const onClickBackButton = () => {
     navigate("/");
+  };
+
+  const kakaoLogIn = () => {
+    // 54.180.128.147/api/auth/kakao
+    // const code = new URL (window.location.href).searchParams.get("code");
+    axios.get("54.180.128.147/api/auth/kakao").then((res) => {
+      console.log(res);
+    });
   };
 
   return (
@@ -27,7 +36,8 @@ function SNSLogInPage() {
             <ImGoogle2 size="40px" color="red" />
           </div>
           <div className="logo">
-            <SiKakaotalk size="40px" color="f9e000" />
+            <a href="54.180.128.147/api/auth/kakao">카카오 로그인</a>
+            <SiKakaotalk size="40px" color="f9e000" onClick={kakaoLogIn} />
           </div>
           <div className="logo">
             <SiNaver size="40px" color="2de400" />
