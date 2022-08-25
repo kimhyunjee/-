@@ -139,8 +139,8 @@ const EditPost = () => {
         }}
         placeholder={posts.number}
         > 
-     </Body4>
-     <Content
+       </Body4>
+      <Content
         type="text"
         name="content"
         onChange={(ev)=>{
