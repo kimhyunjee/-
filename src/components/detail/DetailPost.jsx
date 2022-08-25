@@ -7,22 +7,6 @@ import { BsHeart } from "react-icons/bs";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-//1. 전체리스트를 불러온다.
-//1-1. get요청을 통해 화면에 그릴 정보를 불러온다.
-//1-2. get요청으로 불러온 값을 담을 state를 생성한다. [posts,setPost]
-
-//2. params의 id값과 list의 id값을 대조해 일치한 list를 뽑아 렌더링한다.
-//2-1. useParams로 postId(주소창 id값)을 불러온다.
-//2-2. id값에 맞게 가져온 data를 find를 이용해 비교하고 일치한 것만 뽑는다.
-
-//1. get요청을 통해 화면에 그릴 정보를 불러온다.
-//2. get요청으로 불러온 값을 담을 state를 생성한다. [posts,setPost]
-//3. get요청해서 불러온 값을 response에 담는다.
-//4. fetchPost를 이용해 get한 값을 state에 담는다.
-//4. 생성한 state에 response값을 담는다. = state변경완료
-//5. useEffect로 렌더링될때 fetchPost를 실행시킨다.
-
-
 const DetailPost = () => {
   const navigate = useNavigate();
   const { postId } = useParams(); 
@@ -40,8 +24,6 @@ const DetailPost = () => {
     fetchPosts()
   }, []);
 
-  // const detailPost = posts.find((post)=> post.postId == postId);
-  // console.log(detailPost)
 
   const onClickDeleteBtnHandler = async () => {
     //console.log(postId)
@@ -95,16 +77,6 @@ const DetailPost = () => {
           <div>
             <div className="nickname">{posts.nickname}</div>
             <div>{posts.location}</div>
-            {/* {posts?.map((post)=>
-               (
-                <div key={post.postId}>
-                  <div>{post.nickname}</div>
-                </div>
-              )
-            )} */}
-            {/* <div className="nickname"> {detailPost.nickname} </div>
-            <div className="location"> {detailPost.location} </div> */}
-                
           </div>
         </UserInfo>
         <hr />
@@ -120,7 +92,6 @@ const DetailPost = () => {
         <BsHeart 
           size={30}
         />
-        {/* <div className="price">{DetailPost.price}</div> */}
         <StButton>채팅하기</StButton>
       </Bottom>
     </>
@@ -133,9 +104,9 @@ const Header = styled.div`
   background-color: #acd137;
   color: white;
   padding: 6px;
-  display: flex; //
-  justify-content: space-between; //
-  align-items: center; //
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
 
   & svg {
     cursor: pointer;
