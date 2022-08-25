@@ -26,7 +26,6 @@ const MainPage= () => {
       <StMaincontainer>
         <StHeadercontainer>
           <UserLocation>{posts.location}</UserLocation>
-          
           <div className="searchbox">
             <BiSearch 
               size={28}/>

@@ -52,6 +52,9 @@ const Posting = () => {
           </div>
           <div className="headertitle">중고거래 글쓰기</div>          
             <Complete
+              onClick={()=>{
+                navigate('/main')
+              }}
             >완료</Complete>
           <hr />
         </Header>

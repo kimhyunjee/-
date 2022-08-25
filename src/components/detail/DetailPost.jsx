@@ -27,7 +27,7 @@ const DetailPost = () => {
 
   const onClickDeleteBtnHandler = async () => {
     //console.log(postId)
-    const data = await axios.delete(`http://15.164.171.114/api/post/${postId}`);
+    const data = await axios.delete(`http://54.180.128.147/api/post/${postId}`);
     console.log(data)
     alert("게시글이 삭제되었습니다");
     navigate('/main');
