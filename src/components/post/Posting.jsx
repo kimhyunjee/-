@@ -9,39 +9,20 @@ import { BsFillCameraFill } from "react-icons/bs";
 const Posting = () => {
   const navigate = useNavigate();
   
- //const [selectedFile, setSelectedFile] = useState(null); 
-
   const file = useRef(null);
   const title_Ref = useRef();
   const content_Ref = useRef();
   const price_Ref = useRef();
-  
-  // const onChangeInputHandler = (e) => {
-  //   const formData = new FormData();  //선택한 file=formData
-  //   formData.append('image', file.current.files[0]);
-  //   formData.append('title', title_Ref.current.value);
-  //   formData.append('location', location_Ref.current.value);
-  //   formData.append('price', price_Ref.current.value);
 
-  //   console.log(formData)
-
-  // for (let key of formData.keys()) {
-  //   console.log(key, ':', formData.get(key));
-  //   }
-
-    //console.log(e.target.files[0])
-  
-    //console.log(formData)
   const onSubmitHandler = async () => {
-    const formData = new FormData();  //선택한 file=formData
+    const formData = new FormData();  
     formData.append('image', file.current.files[0]);
     formData.append('title', title_Ref.current.value);
     formData.append('content', content_Ref.current.value);
     formData.append('price', price_Ref.current.value);
     console.log(formData)
     try {
-      const response = await axios.post("http://15.164.171.114/api/post", formData );
-      // {formData, title:title_Ref.current.value, content:content_Ref.current.value, price:price_Ref.current.value}
+      const response = await axios.post("http://54.180.128.147/api/post", formData );
         console.log(response)
         return navigate('/main')
     } catch (error) {
@@ -49,22 +30,7 @@ const Posting = () => {
     }
     alert('게시글이 작성되었습니다!')
     
-    console.log(file.current.files[0])
-    //console.log(price_Ref.current.value)
   };
-
-//   const handleImg = (e) => {
-//     e. preventDefault();
-
-//     if (e.target.files) {
-//         const uploadfile = e.target.files[0]
-//         setImage( uploadFile )
-//     }
-// }
-
-  // const onClickBtnHandler = (postId, edit) => {
-  //   axios.patch(`http://localhost:3001/post/${postId}`, edit)
-  // };
 
   return (
     <>
@@ -86,11 +52,9 @@ const Posting = () => {
           </div>
           <div className="headertitle">중고거래 글쓰기</div>          
             <Complete
-              // name="image"
             >완료</Complete>
           <hr />
         </Header>
-       {/* </form> */}
       <div>
       </div>
       <Picture>
@@ -143,7 +107,6 @@ const Header = styled.div`
 
   .headertitle {
     margin-left: 90px;
-
   }          
 
   svg { 
@@ -178,28 +141,7 @@ const Body1 = styled.input`
   margin-bottom: 10px;
   margin-top: 10px;
 `
-const Body2 = styled.input`
-  padding: 15px;
-	border: 1px solid #ccc;
-	border-radius: 3px;
-	margin-bottom: 10px;
-	width: 100%;
-	box-sizing: border-box;
-	font-family: montserrat;
-	color: #2C3E50;
-	font-size: 13px;
-`
-const Body3 = styled.input`
-  padding: 15px;
-	border: 1px solid #ccc;
-	border-radius: 3px;
-	margin-bottom: 10px;
-	width: 100%;
-	box-sizing: border-box;
-	font-family: montserrat;
-	color: #2C3E50;
-	font-size: 13px;
-`
+
 const Body4 = styled.input`
   padding: 15px;
 	border: 1px solid #ccc;
@@ -226,7 +168,6 @@ const Content = styled.textarea`
     
 `
 
-
 const Picture = styled.div`
     height: 200px;
     display: flex;
@@ -250,12 +191,4 @@ const Box = styled.div`
        cursor: pointer;
     }
 `
-const UserInfo = styled.div`
-  color: #959595;
-  background-color: white;
-  & svg {
-    margin-left: 10px;
-    margin-top: 10px;
-    cursor: pointer;
-  }
-`;
+
