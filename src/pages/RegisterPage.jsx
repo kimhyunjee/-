@@ -22,6 +22,15 @@ function RegisterPage() {
   );
   // const [ profile setProfile] = useState("https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png");
   const [profile, setProfile] = useState("");
+  const [userinfo, setUserInfo] = useState({
+    email: "",
+    password: "",
+    nickname: "",
+  });
+
+  // const [inputEmail, setInputEmail] = useState("");
+  // const [inputPw, setInputPw] = useState("");
+  // const [inputNickname, setInputNickname] = useState("");
 
   //유효성검사
   const {
@@ -77,24 +86,55 @@ function RegisterPage() {
     reader.readAsDataURL(file);
   };
   // console.log(previewImg);
+  // console.log(email, password, nickname);
 
   //회원가입시도
-  const onSubmit = async () => {
-    // console.log(
-    //   email.current,
-    //   nickname.current,
-    //   password.current,
-    //   fileInput.current.files[0]
-    // );
+  const onSubmit = async (e) => {
+    console.log(
+      email.current,
+      nickname.current,
+      password.current,
+      fileInput.current.files[0]
+    );
     const formData = new FormData();
+
+    // formData.append("email", email.current);
+    // formData.append("nickName", nickname.current);
+    // formData.append("password", password.current);
+    // formData.append("img", fileInput.current.files[0]);
+
     formData.append("email", email.current);
     formData.append("nickName", nickname.current);
     formData.append("password", password.current);
-    formData.append("img", fileInput.current.files[0]);
     console.log(formData);
 
+    const body = {
+      email: email.current,
+      nickname: nickname.current,
+      password: password.current,
+    };
+
+    // try {
+    //   const response = await axios.post(
+    //     "http://54.180.128.147/api/auth/signUp",
+    //     {
+    //       email: email,
+    //       password: password,
+    //       nickname: nickname,
+    //     },
+    //     {
+    //       headers: {
+    //         "Content-type": "application/json; charset=UTF-8",
+    //       },
+    //     }
+    //   );
+    // } catch (err) {
+    //   console.log(err);
+    //   alert("로그인에 실패하셨습니다!");
+    // }
+
     axios
-      .post("http://54.180.128.147/api/auth/signUp", formData)
+      .post("http://54.180.128.147/api/auth/signUp", body)
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
@@ -138,6 +178,7 @@ function RegisterPage() {
               type="file"
               accept="image/jpg,image/png,image/jpeg,image/gif"
               onChange={OnChangeFile}
+              encType="multipart/form-data"
               ref={fileInput}
               // src: ""; //나중에 여기에 백엔드에서(s3) 보내주는 이미지 주소 넣으면됨
             />
@@ -153,6 +194,7 @@ function RegisterPage() {
               id="email"
               type="text"
               placeholder="이메일을 입력해주세요"
+              // value={inputEmail}
               {...register("email", {
                 required: true,
                 pattern: /\S+@\S+\.\S+/,
@@ -175,6 +217,7 @@ function RegisterPage() {
               id="nickName"
               type="text"
               placeholder="닉네임을 입력해주세요"
+              // value={inputNickname}
               {...register("nickname", {
                 required: true,
                 minLength: 2,
@@ -200,6 +243,7 @@ function RegisterPage() {
               id="password"
               type="password"
               placeholder="비밀번호를 입력해주세요"
+              // value={inputPw}
               ref={password}
               {...register("password", {
                 required: true,
