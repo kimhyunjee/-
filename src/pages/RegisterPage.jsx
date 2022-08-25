@@ -6,9 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-import { auth, db, storage } from "../shared/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-
 import { useForm } from "react-hook-form";
 
 function RegisterPage() {
@@ -24,11 +21,7 @@ function RegisterPage() {
     "https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png"
   );
   // const [ profile setProfile] = useState("https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png");
-
-  //
-  // const [dupEmail, setDupEmail] = useState(false);
-  // const [dupNickname, setDupNickname] = useState(false);
-  // const [profile, setProfile] = useState("");
+  const [profile, setProfile] = useState("");
 
   //유효성검사
   const {
@@ -55,22 +48,25 @@ function RegisterPage() {
   // profileImgUrl.current = watch("profileImgUrl");
   // console.log(profileImgUrl.current);
 
-  const file_link = useRef(null);
+  const fileInput = useRef(null);
 
   //프로필 사진 업로드
   const OnChangeFile = async (e) => {
     e.preventDefault();
-    //프로필 사진 url 받아오기
-    console.log(e.target.files);
-    const uploadfile = await uploadBytes(
-      ref(storage, `images/${e.target.files[0].name}`),
-      e.target.file
-    );
-    console.log(uploadfile); //ref 가져옴
+    //프로필 사진 firebase에 업로드
+    // console.log(e.target.files);
+    // const uploadfile = await uploadBytes(
+    //   ref(storage, `images/${e.target.files[0].name}`),
+    //   e.target.file
+    // );
+    // console.log(uploadfile); //ref 가져옴
 
-    const file_url = await getDownloadURL(uploadfile.ref);
-    console.log(file_url);
-    file_link.current = { url: file_url }; // 가져온 ref firebase에 저장
+    //file url 받아오기
+    // const file_url = await getDownloadURL(uploadfile.ref);
+    // console.log(file_url);
+    // file_link.current = { url: file_url }; // 가져온 ref firebase에 저장
+    // setProfile(file_url);
+    // console.log(profile);
 
     //프로필 사진 미리보기
     let reader = new FileReader();
@@ -79,37 +75,37 @@ function RegisterPage() {
       setPreviewImg(reader.result);
     };
     reader.readAsDataURL(file);
-
-    // let formData = new FormData();
-
-    // formData.append("profileImgUrl", e.target.files[0]);
-    // formData.append("email", email);
   };
   // console.log(previewImg);
 
-  // await client.post('/api/auth/upProfileImg',param, {
-  //   headers: {
-  //     'Content-Type': 'multipart/form-data'
-  //   }
-  // })
-
-  // let formData = new FormData();
-  // let formImage = document.getElementById("formImage");
-  // formData = new FormData(formImage);
-  // console.log(formData);
-
   //회원가입시도
-  const onSubmit = async (data) => {
-    console.log(data);
-    // console.log(data.email);
-    axios.post("http://54.180.128.147/api/auth/signUp", data).then((res) => {
-      console.log(res);
-      if (res.status === 200) {
-        navigate("/login", { replace: true });
-      } else {
-        alert("입력정보를 다시 확인해주세요");
-      }
-    });
+  const onSubmit = async () => {
+    // console.log(
+    //   email.current,
+    //   nickname.current,
+    //   password.current,
+    //   fileInput.current.files[0]
+    // );
+    const formData = new FormData();
+    formData.append("email", email.current);
+    formData.append("nickName", nickname.current);
+    formData.append("password", password.current);
+    formData.append("img", fileInput.current.files[0]);
+    console.log(formData);
+
+    axios
+      .post("http://54.180.128.147/api/auth/signUp", formData)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          navigate("/login", { replace: true });
+        } else {
+          alert("입력정보를 다시 확인해주세요");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -136,12 +132,13 @@ function RegisterPage() {
         >
           <div className="wrap">
             <PostImgBox postImg={previewImg} />
-            {/* 실제이미지받는곳 아래쪽에 src가 아니라 여긴가...?*/}
             <input
               id="img"
+              name="img"
               type="file"
               accept="image/jpg,image/png,image/jpeg,image/gif"
               onChange={OnChangeFile}
+              ref={fileInput}
               // src: ""; //나중에 여기에 백엔드에서(s3) 보내주는 이미지 주소 넣으면됨
             />
             <label id="imglabel" htmlFor="img">
@@ -266,6 +263,7 @@ const StTitleBox = styled.div`
   padding: 5px;
 
   em {
+    font-style: normal;
     font-size: 20px;
     font-weight: bold;
     line-height: 1.4;
