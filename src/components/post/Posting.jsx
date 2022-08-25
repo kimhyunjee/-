@@ -3,27 +3,29 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import { useRef } from "react";
 
 import { FiX } from "react-icons/fi";
 import { BsFillCameraFill } from "react-icons/bs";
+import { ref } from "yup";
 
 const Posting = () => {
   const navigate = useNavigate();
   
  //const [selectedFile, setSelectedFile] = useState(null); 
-  const [posts, setPosts] = useState({ //새롭게 생성하는 post를 관리하는 state
-    file:"",
-    title: "",
-    location : "",
-    price: ""
-  });
+
+ const file = useRef(null);
+ const title_Ref = useRef();
+ const location_Ref = useRef();
+ const price_Ref = useRef();
+  
   const formData = new FormData();  //선택한 file=formData
 
   const onChangeInputHandler = (e) => {
-  formData.append('image', e.target.files[0]);
-  formData.append('title', posts.title);
-  formData.append('location', posts.location);
-  formData.append('price', posts.price);
+    formData.append('image', file.current.files[0]);
+    formData.append('title', title_Ref.current.value);
+    formData.append('location', location_Ref.current.value);
+    formData.append('price', price_Ref.current.value);
 
   for (let key of formData.keys()) {
     console.log(key, ':', formData.get(key));
@@ -34,13 +36,16 @@ const Posting = () => {
     //console.log(formData)
   const onSubmitHandler = async (post) => {
     try {
-      const response = await axios.post("http://54.180.128.147/api/post/${postId}", formData);
+      const response = await axios.post("http://54.180.128.147/api/post", formData);
         console.log(response)
         return navigate('/main')
     } catch (error) {
       console.log(error)
     }
     alert('게시글이 작성되었습니다!')
+    console.log(formData)
+    console.log(file.current.files[0])
+    console.log(price_Ref.current.value)
   };
 
 //   const handleImg = (e) => {
@@ -60,9 +65,10 @@ const Posting = () => {
   return (
     <>
       <form
+        encType="multipart/form-data"
         onSubmit={(e) => {
           e.preventDefault(); //submit했을때 브라우저 새로고침 방지
-          onSubmitHandler(posts);
+          onSubmitHandler();
         }}
       >
         <Header>
@@ -77,14 +83,10 @@ const Posting = () => {
           <div className="headertitle">중고거래 글쓰기</div>          
             <Complete
               name="image"
-              encType="multipart/form-data"
-              onClick={()=>{
-                navigate("/main")
-              }}
             >완료</Complete>          
           <hr />
         </Header>
-      </form>
+       {/* </form> */}
       <div>
       </div>
       <Picture>
@@ -98,18 +100,20 @@ const Posting = () => {
           type="file"
           name="image"
           onChange={(e)=>onChangeInputHandler(e)}
+          ref={file}
         />
       <hr />
         <Body1
           type="text"
           name="title"
-          onChange={(ev) => {
-            const { value } = ev.target;
-            setPosts({
-              ...posts,
-              title: value,
-            });
-          }}
+          ref={title_Ref}
+          // onChange={(ev) => {
+          //   const { value } = ev.target;
+          //   setPosts({
+          //     ...posts,
+          //     title: value,
+          //   });
+          // }}
           placeholder="제목"
         >
       </Body1>
@@ -131,13 +135,14 @@ const Posting = () => {
       <Body3
        type="text"
        name="location"
-       onChange={(ev)=> {
-         const { value } = ev.target;
-         setPosts({
-           ...posts,
-           location: value,
-         });
-       }}
+       ref={location_Ref}
+      //  onChange={(ev)=> {
+      //    const { value } = ev.target;
+      //    setPosts({
+      //      ...posts,
+      //      location: value,
+      //    });
+      //  }}
        placeholder="지역"
        >
       </Body3>
@@ -145,13 +150,15 @@ const Posting = () => {
       <Body4
         type="number"
         name="price"
-        onChange={(ev) => {
-          const { value } = ev.target;
-          setPosts({
-            ...posts,
-            price: value,
-          });
-        }}
+        ref={price_Ref}
+        // onChange={(ev) => {
+        //   const { value } = ev.target;
+        //   // setPosts({
+        //   //   ...posts,
+        //   //   price: value,
+        //   ref={price_Ref}
+        //   // });
+        // }}
         placeholder="가격"
         >
      </Body4>
@@ -159,6 +166,7 @@ const Posting = () => {
      <Content
       placeholder="게시글 내용을 작성해주세요. (가품 및 판매금지품목은 게시가 제한될 수 있어요.)">        
      </Content>
+     </form>
     </>
   );
 };

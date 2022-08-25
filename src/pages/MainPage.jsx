@@ -19,6 +19,7 @@ const MainPage= () => {
     //console.log(post) // state 변경 후 post 값이 잘 들어갔는지 확인 3
     //console.log(response.data) // 1
     console.log(response.data.post)
+    console.log(response)
   }
   console.log(posts)
   console.log(posts.location)
@@ -35,7 +36,7 @@ const MainPage= () => {
         <StHeadercontainer>
           {/* <BiCurrentLocation 
             size={23}/> */}
-          <UserLocation>서울시</UserLocation>
+          <UserLocation>{posts.location}</UserLocation>
           
           <div className="searchbox">
             <BiSearch 
