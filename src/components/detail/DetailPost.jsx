@@ -22,6 +22,7 @@ import { useNavigate, useParams } from "react-router-dom";
 //4. 생성한 state에 response값을 담는다. = state변경완료
 //5. useEffect로 렌더링될때 fetchPost를 실행시킨다.
 
+
 const DetailPost = () => {
   const navigate = useNavigate();
   const { postId } = useParams(); 
@@ -63,14 +64,15 @@ const DetailPost = () => {
               navigate("/main");
             }}
           />
+          </div>
+          <div>
           <FiEdit className="edit"
             size={28}
             onClick={() => {
               navigate(`/edit/${postId}`);
             }}
           />
-        </div>
-        <div>
+        
           <FiTrash2 
             className="delete"
             size={30} 
@@ -85,12 +87,12 @@ const DetailPost = () => {
         </Image>
         <UserInfo>
           <div>
-          <MdAccountCircle className="MdAccountCircle"
-            size={50}
+          <MdAccountCircle
+            size={40}
           />
           </div>
           <div>
-            <div>{posts.nickname}</div>
+            <div className="nickname">{posts.nickname}</div>
             <div>{posts.location}</div>
             {/* {posts?.map((post)=>
                (
@@ -107,10 +109,8 @@ const DetailPost = () => {
         <hr />
         <ContentBox>
         <div>
-          <div>{posts.title}</div>
-          <div>{posts.content}</div>
-          {/* <div className="title"> {detailPost.title} </div>
-          <div className="content"> {detailPost.content} </div> */}
+          <div className="title">{posts.title}</div>
+          <div className="body">{posts.content}</div>
         </div>
         </ContentBox>
       </Body>
@@ -131,40 +131,54 @@ const Header = styled.div`
   height: 50px;
   background-color: #acd137;
   color: white;
-  padding: 10px;
-  
-    //margin-left: 100px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 6px;
+  display: flex; //
+  justify-content: space-between; //
+  align-items: center; //
 
   & svg {
     cursor: pointer;
-    margin-left: 3px;
+    margin-left: 5px;
+    margin-right: 2px;
   }
 `;
 
 const Body = styled.div`
-  
+  //font-weight: 700;
 `;
 const ContentBox = styled.div`
   background-color: white;
   height: 200px;
+  margin-left: 20px;
+
+  .title {
+    font-weight: 700;
+    font-size: larger;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
 `
 
 const UserInfo = styled.div`
-  color: #959595;
+  color: rgb(169, 169, 169);
   background-color: white;
   display: flex;
   align-items: center;
+  height: 70px;
+
+  .nickname {
+    margin-left: 10px;
+    color: black;
+    font-weight: 600;
+  }
 
   & svg {
-    margin-left: 10px;
+    margin-left: 15px;
     margin-top: 10px;
     cursor: pointer;
   }
 `;
-
+  
 const Image = styled.div`
   background-color: #0077ff;
   height: 300px;
@@ -173,7 +187,7 @@ const Image = styled.div`
 const Bottom = styled.div`
   background-color: white;
   height: 60px;
-  color: #959595;
+  color: rgb(169, 169, 169);
   
   display: flex;
   justify-content: space-between;
@@ -200,10 +214,3 @@ const StButton = styled.button`
   margin: auto;
   margin-right: 10px;
 `;
-const Title = styled.div`
-  color: black;
-`
-
-const Content = styled.div`
-  color: black;
-`

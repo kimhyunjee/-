@@ -5,6 +5,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "../components/common/Layout";
 import MainPage from "../pages/MainPage";
 import LogInPage from "../pages/LogInPage";
+import SNSLogInPage from "../pages/SNSLogInPage";
+import RegisterPage from "../pages/RegisterPage";
 import NotFound from "../pages/NotFound";
 import DetailPage from "../pages/DetailPage";
 import MyPage from "../pages/MyPage";
@@ -21,6 +23,8 @@ function Router() {
           <Route path="/" element={<StartPage />} />
           <Route path="/main" element={<MainPage />} />
           <Route path="/login" element={<LogInPage />} />
+          <Route path="/snslogin" element={<SNSLogInPage />} />
+          <Route path="/signup" element={<RegisterPage />} />
           <Route path="/*" element={<NotFound />} />
           <Route path="/post" element={<PostPage />} />
           <Route path="/post/:postId" element={<DetailPage />} />
