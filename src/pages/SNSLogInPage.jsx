@@ -15,6 +15,7 @@ function SNSLogInPage() {
   const kakaoLogIn = async () => {
     // 54.180.128.147/api/auth/kakao
     // const code = new URL (window.location.href).searchParams.get("code");
+
     await axios
       .get("http://54.180.128.147/api/auth/kakao")
       .then((res) => {

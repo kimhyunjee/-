@@ -95,9 +95,8 @@ const Posting = () => {
         </Box>
       </Picture>
       <input 
-          type="file" 
+          type="file"
           name="image"
-        // accept="image/jpeg,.txt"
           onChange={(e)=>onChangeInputHandler(e)}
         />
       <hr />
@@ -155,7 +154,6 @@ const Posting = () => {
         }}
         placeholder="가격"
         >
-          
      </Body4>
      {/* <hr /> */}
      <Content
@@ -167,15 +165,39 @@ const Posting = () => {
 
 export default Posting;
 
-const Body1 = styled.input`
-    /* height: 60px;
-    width: 350px;
-    margin-left: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: white; */
+const Header = styled.div`
+  height: 50px;
+  background-color: #acd137;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
+  .headertitle {
+    margin-left: 90px;
+
+  }          
+
+  svg { 
+    cursor: pointer;
+    margin-left: 15px;
+  }
+`;
+
+const Complete = styled.button`
+    cursor: pointer;
+    //margin-right: -80px;
+    width: 50px;
+    background: #acd137;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 1px;
+    cursor: pointer;
+    margin-left: 80px;
+`
+
+const Body1 = styled.input`
   padding: 15px;
 	border: 1px solid #ccc;
 	border-radius: 3px;
@@ -189,14 +211,7 @@ const Body1 = styled.input`
   margin-top: 10px;
 `
 const Body2 = styled.input`
-    /* height: 60px;
-    width: 350px;
-    margin-left: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: white; */
-    padding: 15px;
+  padding: 15px;
 	border: 1px solid #ccc;
 	border-radius: 3px;
 	margin-bottom: 10px;
@@ -242,32 +257,8 @@ const Content = styled.textarea`
 	font-size: 13px;
     
 `
-const Header = styled.div`
-  height: 50px;
-  background-color: #acd137;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  svg { // X
-    cursor: pointer;
-    margin-left: 10px;
-  }
- 
-`;
 
-const Complete = styled.button`
-    cursor: pointer;
-    //margin-right: -80px;
-    width: 50px;
-    background: #acd137;
-    font-weight: bold;
-    color: white;
-    border: 0 none;
-    border-radius: 1px;
-    cursor: pointer;
-    margin-left: 150px;
-`
+
 const Picture = styled.div`
     height: 200px;
     display: flex;
