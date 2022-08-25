@@ -5,17 +5,9 @@ import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import {
-  collection,
-  doc,
-  getDocs,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-} from "firebase/firestore";
+
 import { auth, db, storage } from "../shared/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 import { useForm } from "react-hook-form";
 
@@ -34,9 +26,9 @@ function RegisterPage() {
   // const [ profile setProfile] = useState("https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png");
 
   //
-  const [dupEmail, setDupEmail] = useState(false);
-  const [dupNickname, setDupNickname] = useState(false);
-  const [profile, setProfile] = useState("");
+  // const [dupEmail, setDupEmail] = useState(false);
+  // const [dupNickname, setDupNickname] = useState(false);
+  // const [profile, setProfile] = useState("");
 
   //유효성검사
   const {
@@ -45,45 +37,66 @@ function RegisterPage() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  // console.log(watch("email"));
 
   //이메일 값 가져오기
   const email = useRef();
   email.current = watch("email");
-  // console.log(email.current);
 
   //비밀번호 값 가져오기
   const password = useRef();
   password.current = watch("password");
-  // console.log(password.current);
 
   //닉네임 값 가져오기
   const nickname = useRef();
   nickname.current = watch("nickname");
-  // console.log(nickname.current);
 
   // //프로필사진 가져오기
   // const profileImgUrl = useRef();
   // profileImgUrl.current = watch("profileImgUrl");
+  // console.log(profileImgUrl.current);
 
-  //프로필 사진 미리보기
+  const file_link = useRef(null);
+
+  //프로필 사진 업로드
   const OnChangeFile = async (e) => {
     e.preventDefault();
-    // console.log(e.target.files); //여기까지 잘나옴
-    // const uploadfile = await uploadBytes(
-    //   ref(storage, `images/${e.target.files[0].name}`),
-    //   e.target.file[0]
-    // );
-    // console.log(uploadfile); //파일리스트로 잘 나옴 근데 백으로보내줄주소 못받음
+    //프로필 사진 url 받아오기
+    console.log(e.target.files);
+    const uploadfile = await uploadBytes(
+      ref(storage, `images/${e.target.files[0].name}`),
+      e.target.file
+    );
+    console.log(uploadfile); //ref 가져옴
 
+    const file_url = await getDownloadURL(uploadfile.ref);
+    console.log(file_url);
+    file_link.current = { url: file_url }; // 가져온 ref firebase에 저장
+
+    //프로필 사진 미리보기
     let reader = new FileReader();
     let file = e.target.files[0];
     reader.onloadend = () => {
       setPreviewImg(reader.result);
     };
     reader.readAsDataURL(file);
+
+    // let formData = new FormData();
+
+    // formData.append("profileImgUrl", e.target.files[0]);
+    // formData.append("email", email);
   };
-  console.log(previewImg);
+  // console.log(previewImg);
+
+  // await client.post('/api/auth/upProfileImg',param, {
+  //   headers: {
+  //     'Content-Type': 'multipart/form-data'
+  //   }
+  // })
+
+  // let formData = new FormData();
+  // let formImage = document.getElementById("formImage");
+  // formData = new FormData(formImage);
+  // console.log(formData);
 
   //회원가입시도
   const onSubmit = async (data) => {
@@ -116,6 +129,10 @@ function RegisterPage() {
         <Form
           // action="나중에 서버url"
           onSubmit={handleSubmit(onSubmit)}
+          id="formImage"
+          action="/post"
+          method="post"
+          encType="multipart/form-data"
         >
           <div className="wrap">
             <PostImgBox postImg={previewImg} />
@@ -131,6 +148,8 @@ function RegisterPage() {
               파일 선택
             </label>
           </div>
+        </Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <div className="inputbox">
             <input
               className="check"
