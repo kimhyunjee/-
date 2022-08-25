@@ -12,12 +12,17 @@ function SNSLogInPage() {
     navigate("/");
   };
 
-  const kakaoLogIn = () => {
+  const kakaoLogIn = async () => {
     // 54.180.128.147/api/auth/kakao
     // const code = new URL (window.location.href).searchParams.get("code");
-    axios.get("54.180.128.147/api/auth/kakao").then((res) => {
-      console.log(res);
-    });
+    await axios
+      .get("http://54.180.128.147/api/auth/kakao")
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -36,7 +41,7 @@ function SNSLogInPage() {
             <ImGoogle2 size="40px" color="red" />
           </div>
           <div className="logo">
-            <a href="54.180.128.147/api/auth/kakao">카카오 로그인</a>
+            {/* <a href="54.180.128.147/api/auth/kakao">카카오 로그인</a> */}
             <SiKakaotalk size="40px" color="f9e000" onClick={kakaoLogIn} />
           </div>
           <div className="logo">
