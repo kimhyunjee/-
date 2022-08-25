@@ -53,15 +53,18 @@ const DetailPost = () => {
   return (
     <>
       <Header>
-        <div>
+        <div
+          style={{ flexDirection: "row" }}
+        >
+            {/* style={{ marginLeft : "10px" }} */}
           <FiArrowLeft className="arrow"
-            size={30}
+            size={28}
             onClick={() => {
-              navigate("/");
+              navigate("/main");
             }}
           />
           <FiEdit className="edit"
-            size={30}
+            size={28}
             onClick={() => {
               navigate(`/edit/${postId}`);
             }}
@@ -78,7 +81,7 @@ const DetailPost = () => {
       </Header>
       <Body>
         <Image>
-            사진
+            {posts.imageUrl}
         </Image>
         <UserInfo>
           <div>
@@ -89,7 +92,6 @@ const DetailPost = () => {
           <div>
             <div>{posts.nickname}</div>
             <div>{posts.location}</div>
-            
             {/* {posts?.map((post)=>
                (
                 <div key={post.postId}>
@@ -129,6 +131,7 @@ const Header = styled.div`
   height: 50px;
   background-color: #acd137;
   color: white;
+  padding: 10px;
   
     //margin-left: 100px;
   display: flex;
@@ -137,9 +140,9 @@ const Header = styled.div`
 
   & svg {
     cursor: pointer;
+    margin-left: 3px;
   }
 `;
-
 
 const Body = styled.div`
   

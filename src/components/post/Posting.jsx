@@ -95,9 +95,8 @@ const Posting = () => {
         </Box>
       </Picture>
       <input 
-          type="file" 
+          type="file"
           name="image"
-        // accept="image/jpeg,.txt"
           onChange={(e)=>onChangeInputHandler(e)}
         />
       <hr />
@@ -155,7 +154,6 @@ const Posting = () => {
         }}
         placeholder="가격"
         >
-          
      </Body4>
      {/* <hr /> */}
      <Content

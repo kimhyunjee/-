@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { FiX } from "react-icons/fi";
+import { FiX, FiCheck } from "react-icons/fi";
 import { BsFillCameraFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 
 const EditPost = () => {
   const navigate = useNavigate();
-  const { postId } = useParams() 
+  const { postId } = useParams();
   //const [targetId, setTargetId] = useState(null);
   const [editTodo, setEditTodo] = useState({
     postId: "",
@@ -28,11 +28,21 @@ const EditPost = () => {
 
   const payload = {userId: 1} //지우기
 
-  const onClickEditBtnHandler = async (edit) => {
-    const data = await axios.put(`http://54.180.128.147/api/post/${postId}`, edit);
-    navigate (`/post/${postId}`)
-    console.log(data)
-  };
+  //const onClickEditBtnHandler = async () => {
+    async function putData() {
+      try {
+          const res = await axios.put(`http://54.180.128.147/api/post/${postId}`, {
+            title: "",
+            imageUrl: URL,
+            price: 1000,
+            content: "EDIT",
+          });
+          navigate (`/post/${postId}`)
+          console.log(res)
+      } catch (err) {
+          console.log(err);
+      }
+  }
 ///////////get////////////
   const [posts, setPosts] = useState([]);
 
@@ -50,14 +60,25 @@ const EditPost = () => {
   return (
     <>
       <Header>
-        <FiX 
-          size={30}
-          onClick={`post/${postId}`}
-        />
+        <div>
+          <FiX 
+            size={30}
+            onClick={()=>{
+              navigate("/main")
+            }}
+          />
+        </div>
         <div>오이 거래 수정하기</div>
-        <Complete
+        <div>
+          <FiCheck
+            size={30}
+            onClick={()=>{putData(payload, EditPost)}
+          }
+          > 완료 </FiCheck>
+        </div>
+        {/* <Complete
           onClick={() => onClickEditBtnHandler(payload, EditPost)}
-        > 완료 </Complete>
+        > 완료 </Complete> */}
         <hr />
       </Header>
       <Picture>
@@ -67,6 +88,10 @@ const EditPost = () => {
           />
         </Box>
       </Picture>
+      <input 
+          type="file"
+          name="image"
+        />
       <hr />
       <Body1
         type="text"
@@ -77,7 +102,7 @@ const EditPost = () => {
             title: ev.target.value,
           })
         }}
-        placeholder={posts.title}
+        placeholder= {posts.title} 
       >
       </Body1>
       {/* <Body2>
@@ -91,7 +116,7 @@ const EditPost = () => {
           ></input>
       </Body2>
       <hr /> */}
-      <Body3
+      {/* <Body3
         type="text"
         name="location"
         onChange={(ev)=>{
@@ -102,7 +127,7 @@ const EditPost = () => {
         }}
         placeholder={posts.location}
       >
-      </Body3>
+      </Body3> */}
       <Body4
         type="number"
         name="price"
@@ -209,15 +234,15 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
   svg {
     cursor: pointer;
-    margin-left: 10px;
   }
 `;
-const Complete = styled.button`
-    cursor: pointer;
-    margin-right: -80px;
-`
+// const FiCheck = styled.button`
+//     cursor: pointer;
+//     margin-right: -80px;
+// `
 const Picture = styled.div`
     height: 200px;
     display: flex;

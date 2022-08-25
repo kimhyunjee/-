@@ -33,16 +33,17 @@ const MainPage= () => {
     <>
       <StMaincontainer>
         <StHeadercontainer>
-          <BiCurrentLocation 
-            size={23}/>
+          {/* <BiCurrentLocation 
+            size={23}/> */}
           <UserLocation>서울시</UserLocation>
+          
           <div className="searchbox">
             <BiSearch 
-              size={25}/>
+              size={28}/>
           </div>
           <div className="alarm">
             <BiBell 
-              size={25}/>
+              size={28}/>
           </div>
         </StHeadercontainer>
         <StBodycontainer>
@@ -75,11 +76,19 @@ const MainPage= () => {
         <StFootercontainer>
           <div className="bottomMenubar">
             <div className="bottomMenuBox">
-              <AiFillHome size="30px" />
-              <p className="gohome">홈</p>
+              <AiFillHome
+                size="28px"
+                cursor={"pointer"}
+                navigate={'/'}
+              />
+              <p>홈</p>
             </div>
             <div className="bottomMenuBox">
-              <BiUser size="30px" />
+              <BiUser
+                size="28px"
+                cursor={"pointer"}
+                navigate={'/'}
+              />
               <p className="godetail"> 나의 오이</p>
             </div>
           </div>
@@ -102,7 +111,12 @@ const Title = styled.div`
   
 `
 const UserLocation = styled.div`
-  
+  align-items: center; 
+  justify-content: center;
+  display: flex;
+  //flex-direction: column;
+  flex-direction: row;
+  //width: 200px;
 `
 const Location = styled.div`
   
@@ -124,18 +138,16 @@ const StMaincontainer = styled.div``;
 const StHeadercontainer = styled.div`
   background-color: #acd137;
   height: 50px;
-  margin: 20px 0;
   padding: 0 10px;
   display: flex;
   justify-content: space-between;
       
-
   & .userlocation {
     text-align: center;
     flex-direction: column;
     justify-content: center; 
     align-items: center; 
-    margin-left: 10px;
+    margin-left: -100px;
     cursor: pointer;
   }
 
@@ -143,7 +155,7 @@ const StHeadercontainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 295px;
+    margin-left: 240px;
     cursor: pointer;
   }
 
@@ -172,7 +184,7 @@ const StBodycontainer = styled.div`
   flex: 1;
   background-color: white;
   height: 70vh;
-  margin: 20px;
+  //margin: 20px;
   overflow-y: scroll;
 
   .buttonbox {
