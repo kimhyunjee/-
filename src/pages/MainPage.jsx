@@ -57,7 +57,7 @@ const MainPage= () => {
                       navigate(`/post/${post.postId}`)
                     }}>
                   <div>
-                  <Img>img</Img>
+                  <Img></Img>
                   </div>
                   <div>
                   <Title>{post.title}</Title>
@@ -71,7 +71,11 @@ const MainPage= () => {
               )
             })}
           <button className="buttonbox">
-            <BsFillPlusCircleFill />
+            <BsFillPlusCircleFill 
+              onClick={()=>{
+                navigate(`/post`)
+              }}
+            />
           </button>
         </StBodycontainer>
         <StFootercontainer>
@@ -202,6 +206,7 @@ const StBodycontainer = styled.div`
     box-shadow: 0 0 6px 0 #999;
     color: #acd137;
     border-width: 0;
+    cursor: pointer;
   }
 `;
 

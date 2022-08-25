@@ -30,7 +30,7 @@ const DetailPost = () => {
   console.log(postId)
 
   const fetchPosts = async () => {
-    const res = await axios.get(`http://15.164.171.114/api/post/${postId}`);
+    const res = await axios.get(`http://54.180.128.147/api/post/${postId}`);
     console.log(postId)
     setPosts(res.data);
   }

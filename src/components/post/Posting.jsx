@@ -40,7 +40,7 @@ const Posting = () => {
     formData.append('price', price_Ref.current.value);
     console.log(formData)
     try {
-      const response = await axios.post("http://15.164.171.114/api/post", formData );
+      const response = await axios.post("http://54.180.128.147/api/post", formData );
       // {formData, title:title_Ref.current.value, content:content_Ref.current.value, price:price_Ref.current.value}
         console.log(response)
         return navigate('/main')

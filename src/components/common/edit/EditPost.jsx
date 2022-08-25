@@ -76,9 +76,6 @@ const EditPost = () => {
           }
           > 완료 </FiCheck>
         </div>
-        {/* <Complete
-          onClick={() => onClickEditBtnHandler(payload, EditPost)}
-        > 완료 </Complete> */}
         <hr />
       </Header>
       <Picture>
