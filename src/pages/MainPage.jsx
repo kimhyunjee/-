@@ -22,7 +22,7 @@ const MainPage= () => {
     console.log(response)
   }
   console.log(posts)
-  console.log(posts.location)
+  //console.log(posts.location)
 
   console.log(posts)
 

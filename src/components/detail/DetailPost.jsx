@@ -30,7 +30,7 @@ const DetailPost = () => {
   console.log(postId)
 
   const fetchPosts = async () => {
-    const res = await axios.get(`http://54.180.128.147/api/post/${postId}`);
+    const res = await axios.get(`http://15.164.171.114/api/post/${postId}`);
     console.log(postId)
     setPosts(res.data);
   }
@@ -45,7 +45,7 @@ const DetailPost = () => {
 
   const onClickDeleteBtnHandler = async () => {
     //console.log(postId)
-    const data = await axios.delete(`http://54.180.128.147/api/post/${postId}`);
+    const data = await axios.delete(`http://15.164.171.114/api/post/${postId}`);
     console.log(data)
     alert("게시글이 삭제되었습니다");
     navigate('/main');
@@ -82,8 +82,9 @@ const DetailPost = () => {
         </div>
       </Header>
       <Body>
-        <Image>
-            {posts.imageUrl}
+        <Image
+          url={posts.imageUrl}
+        >
         </Image>
         <UserInfo>
           <div>
@@ -180,8 +181,10 @@ const UserInfo = styled.div`
 `;
   
 const Image = styled.div`
-  background-color: #0077ff;
+  background-position: center;
+  background-size: cover;
   height: 300px;
+  background-image: url(${(props) => props.url});
 `;
 
 const Bottom = styled.div`
